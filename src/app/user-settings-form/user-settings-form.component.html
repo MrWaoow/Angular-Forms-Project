@@ -1,0 +1,74 @@
+<div class="container">
+    <h2>{{pageTitle}}</h2>
+    <!-- <form #form="ngForm" action="" ngNativeValidate> -->
+    <form #form="ngForm" action="" (ngSubmit)="onSubmit(form)">
+        <div class="mb-3">
+            <label class="form-label" for="name">Name</label>
+            <input type="text" id="name" name="name" class="form-control" [(ngModel)]="userSettings.name" required
+                #nameField="ngModel" (blur)="onBlur(nameField)"
+                [class.field-error]="form.submitted && nameField.invalid">
+            <div [hidden]="!form.submitted || nameField.valid" class="alert alert-danger">
+                Enter your name.
+            </div>
+        </div>
+        <!-- <h3>dirty: {{propertyTest.dirty}}</h3>
+        <h3>pristine: {{propertyTest.pristine}}</h3>
+        <h3>touched: {{propertyTest.touched}}</h3>
+        <h3>untouched: {{propertyTest.untouched}}</h3>
+        <h3>valid: {{propertyTest.valid}}</h3>
+        <h3>invalid: {{propertyTest.invalid}}</h3> -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" id="password"
+                [(ngModel)]="userSettings.password">
+        </div>
+        <button type="button" class="btn btn-primary" name="singleModel" [(ngModel)]="singleModel" btnCheckbox>
+            {{singleModel}}
+        </button>
+
+        <div class="mb-3 col-xs-12 col-12 col-md-4 form-group mb-3">
+            <label for="startDate">Start Date</label>
+            <input type="text" placeholder="Datepicker" class="form-control" bsDatepicker
+                [bsConfig]="{ adaptivePosition: true }">
+        </div>
+
+        <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" name="emailOffers" value="" id="emailOffers"
+                [(ngModel)]="userSettings.emailOffers">
+            <label class="form-check-label" for="emailOffers">
+                Email special offers
+            </label>
+        </div>
+        <p>User interface Style</p>
+        <div class="mb-3">
+            <div class="btn-group">
+                <label name="interfaceStyle" [(ngModel)]="userSettings.interfaceStyle" class="btn btn-success mb-0"
+                    btnRadio="{{'light' | lowercase}}">Light</label>
+                <label name="interfaceStyle" [(ngModel)]="userSettings.interfaceStyle" class="btn btn-success mb-0"
+                    btnRadio="{{'medium' | lowercase}}">Medium</label>
+                <label name="interfaceStyle" [(ngModel)]="userSettings.interfaceStyle" class="btn btn-success mb-0"
+                    btnRadio="{{'dark' | lowercase}}">Dark</label>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="subscriptionType" class="form-label">Subscription Type</label>
+            <select id="subscriptionType" name="subscriptionType" class="form-select"
+                aria-label="Default select example" [(ngModel)]="userSettings.subscriptionType">
+                <option *ngFor="let type of subscriptionTypes| async; index as i">
+                    {{type}}
+                </option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="notes" class="form-label">Notes</label>
+            <textarea class="form-control" name="notes" id="notes" rows="3" [(ngModel)]="userSettings.notes"></textarea>
+        </div>
+        <div [hidden]="!postError" class="alert alert-danger">
+            {{postErrorMessage}}
+        </div>
+        <button class="btn btn-primary">send</button>
+    </form>
+</div>
+<h1>
+    {{userSettings | json}}
+</h1>
